@@ -1,6 +1,6 @@
 # Personal Site Backend
 
-个人网站项目的后端，计划与 React 前端配合使用。当前提供 REST API 的项目骨架，以及本地数据库、迁移和集成测试配置。
+个人网站的后端，面向 React 前端提供 REST API。目前支持公开的作品列表和详情查询。
 
 ## 技术栈
 
@@ -66,7 +66,7 @@ IDEA 的运行配置拥有自己的环境变量。在 IDEA 内置终端执行 `s
 curl --noproxy '*' -fsS http://127.0.0.1:8080/actuator/health
 ```
 
-应用启动后，可以在浏览器打开 [Swagger UI](http://localhost:8080/swagger-ui.html)。OpenAPI JSON 位于 `/v3/api-docs`。如果浏览器跳转到默认登录页，用户名是 `user`，密码是启动日志中 `Using generated security password` 后的值。
+应用启动后，可以在 [Swagger UI](http://localhost:8080/swagger-ui.html) 查看接口路径、请求参数和响应结构。OpenAPI JSON 位于 `/v3/api-docs`。如果浏览器跳转到默认登录页，用户名是 `user`，密码是启动日志中 `Using generated security password` 后的值。
 
 ### 停止本地服务
 
@@ -84,4 +84,4 @@ docker compose down
 ./mvnw clean verify
 ```
 
-Flyway 迁移文件位于 `src/main/resources/db/migration/`。当前的 `V1__init.sql` 用于验证迁移流程。后续表结构变更用新的版本化 SQL 文件提交，Hibernate 在本地只校验实体与表结构是否匹配。
+本地启动应用时，Flyway 会执行 `src/main/resources/db/migration/` 中待执行的迁移。变更表结构时，添加新的版本化 SQL 文件。Hibernate 在本地校验实体与表结构是否匹配。
