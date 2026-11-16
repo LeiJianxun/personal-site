@@ -128,3 +128,12 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .dark .home-footer {
+    background-image:
+      radial-gradient(ellipse 68% 95% at 0% 116%, #666, transparent 68%),
+      radial-gradient(ellipse 68% 95% at 100% 116%, #666, transparent 68%),
+      linear-gradient(180deg, transparent 45%, #181818);
+  }
+}

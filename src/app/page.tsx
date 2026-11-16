@@ -1,3 +1,5 @@
+import { HomeFooter } from "@/components/indexCom/home-footer";
+import { HomeHeader } from "@/components/indexCom/home-header";
 import { getProjects } from "@/lib/projects-api";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -33,17 +35,15 @@ async function ProjectList() {
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col bg-background font-sans">
-      <header className="border-b">
-        <div
-          className={`${pageWidth} flex min-h-16 items-center justify-between gap-4 sm:min-h-[72px]`}
-        >
-          <div className="flex min-w-0 items-center gap-4" />
-          <div className="flex shrink-0 items-center gap-2" />
-        </div>
-      </header>
+      <HomeHeader />
 
       <main className={`${pageWidth} flex-1 py-10 sm:py-14 lg:py-16`}>
-        <section aria-labelledby="work-title">
+        <section
+          id="work"
+          aria-labelledby="work-title"
+          className="scroll-mt-20 sm:scroll-mt-24"
+          tabIndex={-1}
+        >
           <h1 id="work-title" className="mb-6 text-3xl font-semibold tracking-tight sm:text-4xl">
             精选作品
           </h1>
@@ -53,9 +53,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t">
-        <div className={`${pageWidth} min-h-20 py-6 sm:min-h-24`} />
-      </footer>
+      <HomeFooter className={pageWidth} />
     </div>
   );
 }
