@@ -1,19 +1,17 @@
 import { notFound } from "next/navigation";
-import { projects } from "@/data/projects";
+import { getProjects, getProject } from "@/lib/projects-api";
 import Markdown from "react-markdown";
 import Link from "next/link";
 
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
-}
-
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const summary = (await getProjects()).find((item) => item.slug === slug);
 
-  if (!project) {
-    notFound();
-  }
+  if (!summary) notFound();
+
+  const project = await getProject(summary.id);
+
+  if (!project) notFound();
 
   return (
     <main className="mx-auto w-full max-w-3xl px-5 py-10 sm:px-8 sm:py-14">
