@@ -22,11 +22,20 @@ public class ProjectRepository {
     // 查询所有作品列表
     public List<Summary> findAll() {
         return jdbc.sql("""
-                SELECT id, slug, title, summary
-                FROM projects
-                ORDER BY id DESC
-                """)
-                .query(Summary.class)
+            SELECT id, slug, title, summary, stack
+            FROM projects
+            ORDER BY id DESC
+            """)
+                .query((rs, rowNum) -> {
+                    JsonNode stack = parseJson(rs.getString("stack"));
+                    return new Summary(
+                            rs.getLong("id"),
+                            rs.getString("slug"),
+                            rs.getString("title"),
+                            rs.getString("summary"),
+                            stack == null || stack.isNull() ? json.createArrayNode() : stack
+                    );
+                })
                 .list();
     }
 
@@ -53,7 +62,7 @@ public class ProjectRepository {
         return value == null ? null : json.readTree(value);
     }
 
-    public record Summary(long id, String slug, String title, String summary) {}
+    public record Summary(long id, String slug, String title, String summary, JsonNode stack) {}
 
     public record Detail(long id, String slug, String title, String summary,
                          JsonNode stack, String bodyMarkdown, JsonNode links) {}
