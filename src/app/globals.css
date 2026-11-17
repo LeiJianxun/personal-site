@@ -137,3 +137,110 @@
       linear-gradient(180deg, transparent 45%, #181818);
   }
 }
+
+@property --hero-ring-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.home-hero-ring {
+  --hero-ring-image: url("/images/hero-ring-light.webp");
+  --hero-ring-glint: rgb(255 255 245 / 50%);
+  position: relative;
+  background: var(--hero-ring-image) center / contain no-repeat;
+}
+
+.dark .home-hero-ring {
+  --hero-ring-image: url("/images/hero-ring-dark.webp");
+  --hero-ring-glint: rgb(215 255 227 / 40%);
+}
+
+@keyframes hero-ring-float {
+  50% {
+    transform: translateY(-6px) scale(1.015, 0.99);
+  }
+}
+
+@keyframes hero-ring-sweep {
+  to {
+    --hero-ring-angle: 1turn;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero-ring {
+    animation: hero-ring-float 8s ease-in-out infinite;
+  }
+
+  .home-hero-ring::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--hero-ring-angle),
+      transparent 0deg,
+      var(--hero-ring-glint) 14deg,
+      transparent 32deg
+    );
+    mask: var(--hero-ring-image) center / contain no-repeat;
+    animation: hero-ring-sweep 12s linear infinite;
+  }
+}
+
+.home-hero-stage {
+  --hero-stage-mist: rgb(58 114 84 / 9%);
+  --hero-stage-edge: rgb(50 103 72 / 16%);
+  --hero-stage-ribbon:
+    transparent 91%, var(--hero-stage-mist) 97%, var(--hero-stage-edge) 99%, transparent 101%;
+}
+
+.dark .home-hero-stage {
+  --hero-stage-mist: rgb(105 169 127 / 13%);
+  --hero-stage-edge: rgb(165 219 178 / 20%);
+}
+
+.home-hero-stage::before,
+.home-hero-stage::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 56%;
+  pointer-events: none;
+  mask-image:
+    linear-gradient(to var(--hero-stage-fade), #000 30%, transparent 80%),
+    linear-gradient(transparent, #000 23% 77%, transparent);
+  mask-composite: intersect;
+}
+
+.home-hero-stage::before {
+  left: -4%;
+  --hero-stage-fade: right;
+  background:
+    radial-gradient(ellipse 105% 56% at 88% -13%, var(--hero-stage-ribbon)),
+    radial-gradient(ellipse 107% 44% at 87% 106%, var(--hero-stage-ribbon)),
+    radial-gradient(ellipse 90% 55% at 44% 48%, var(--hero-stage-mist), transparent 76%);
+}
+
+.home-hero-stage::after {
+  right: -4%;
+  --hero-stage-fade: left;
+  background:
+    radial-gradient(ellipse 117% 56% at 12% -26%, var(--hero-stage-ribbon)),
+    radial-gradient(ellipse 120% 52% at 10% 30%, var(--hero-stage-ribbon)),
+    radial-gradient(ellipse 90% 55% at 60% 52%, var(--hero-stage-mist), transparent 76%);
+}
+
+@keyframes hero-stage-drift {
+  50% {
+    transform: translateY(-2%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-hero-stage::before,
+  .home-hero-stage::after {
+    animation: hero-stage-drift 18s ease-in-out infinite;
+  }
+}

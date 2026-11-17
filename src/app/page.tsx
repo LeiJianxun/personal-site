@@ -1,5 +1,6 @@
 import { HomeFooter } from "@/components/indexCom/home-footer";
 import { HomeHeader } from "@/components/indexCom/home-header";
+import { HomeHero } from "@/components/indexCom/home-hero";
 import { getProjects } from "@/lib/projects-api";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -37,11 +38,12 @@ export default function Home() {
     <div className="flex flex-1 flex-col bg-background font-sans">
       <HomeHeader />
 
-      <main className={`${pageWidth} flex-1 py-10 sm:py-14 lg:py-16`}>
+      <main className="w-full flex-1 py-10 sm:py-14 lg:py-16">
+        <HomeHero />
         <section
           id="work"
           aria-labelledby="work-title"
-          className="scroll-mt-20 sm:scroll-mt-24"
+          className={`${pageWidth} scroll-mt-20 sm:scroll-mt-24`}
           tabIndex={-1}
         >
           <h1 id="work-title" className="mb-6 text-3xl font-semibold tracking-tight sm:text-4xl">
