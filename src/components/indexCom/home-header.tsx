@@ -105,7 +105,16 @@ export function HomeHeader() {
                   作品
                 </a>
               </li>
-              {["资源", "关于"].map((label) => (
+              <li className="grid">
+                <a
+                  href="#resources"
+                  className={`${navItem} ${focus} hover:bg-accent hover:text-accent-foreground`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  资源
+                </a>
+              </li>
+              {["关于"].map((label) => (
                 <li key={label} className="grid">
                   <span
                     role="link"

@@ -1,6 +1,8 @@
 import { HomeFooter } from "@/components/indexCom/home-footer";
 import { HomeHeader } from "@/components/indexCom/home-header";
 import { HomeHero } from "@/components/indexCom/home-hero";
+import { HomeResources } from "@/components/indexCom/home-resources";
+import { HomeNotes } from "@/components/indexCom/home-notes";
 import { getProjects } from "@/lib/projects-api";
 import { ArrowUpRight, FolderCode } from "lucide-react";
 import Image from "next/image";
@@ -44,6 +46,7 @@ async function ProjectList() {
                       alt=""
                       fill
                       sizes="(min-width: 1280px) 564px, (min-width: 768px) 50vw, 100vw"
+                      loading="eager"
                       className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.03] dark:hidden"
                     />
                     <Image
@@ -51,6 +54,7 @@ async function ProjectList() {
                       alt=""
                       fill
                       sizes="(min-width: 1280px) 564px, (min-width: 768px) 50vw, 100vw"
+                      loading="eager"
                       className="hidden object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.03] dark:block"
                     />
                   </>
@@ -107,7 +111,7 @@ export default function Home() {
     <div className="flex flex-1 flex-col bg-background font-sans">
       <HomeHeader />
 
-      <main className="w-full flex-1 py-10 sm:py-14 lg:py-16">
+      <main className="w-full flex-1 pt-12 pb-10 sm:pt-5 sm:pb-14 lg:pt-8 lg:pb-16">
         <HomeHero />
         <section
           id="work"
@@ -125,6 +129,8 @@ export default function Home() {
             <ProjectList />
           </Suspense>
         </section>
+        <HomeNotes className={pageWidth} />
+        <HomeResources className={pageWidth} />
       </main>
 
       <HomeFooter className={pageWidth} />

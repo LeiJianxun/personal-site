@@ -144,6 +144,92 @@
   initial-value: 0deg;
 }
 
+.home-hero {
+  --hero-accent: #365f4b;
+  --hero-title-shadow: rgb(247 246 242 / 60%);
+  --hero-button-background: #315c4a;
+  --hero-button-foreground: #f7f6f2;
+}
+
+.dark .home-hero {
+  --hero-accent: #adcbb8;
+  --hero-title-shadow: rgb(10 10 10 / 60%);
+  --hero-button-background: #b0ccbb;
+  --hero-button-foreground: #12251a;
+}
+
+.home-hero-heading {
+  padding-top: clamp(6px, 1.4vw, 18px);
+}
+
+.home-hero-greeting {
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.home-hero-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  padding-top: 12px;
+  font-size: clamp(64px, 13.8vw, 156px);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  text-shadow: 0 2px 18px var(--hero-title-shadow);
+}
+
+.home-hero-name {
+  position: relative;
+}
+
+.home-hero-name::after {
+  content: attr(data-name);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: transparent;
+  background: linear-gradient(
+      105deg,
+      transparent 36%,
+      var(--hero-accent) 47%,
+      var(--foreground) 51%,
+      transparent 63%
+    )
+    170% 0 / 260% 100%;
+  background-clip: text;
+  opacity: 0;
+  text-shadow: none;
+}
+
+.home-hero-dot {
+  color: var(--hero-accent);
+}
+
+.home-hero-tagline {
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0.025em;
+}
+
+.home-hero-work {
+  color: var(--hero-button-foreground);
+  background-color: var(--hero-button-background);
+}
+
+.home-hero-ring-position {
+  position: absolute;
+  z-index: 10;
+  top: 51%;
+  left: 50%;
+  width: min(1060px, 100%);
+  aspect-ratio: 2 / 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
 .home-hero-ring {
   --hero-ring-image: url("/images/hero-ring-light.webp");
   --hero-ring-glint: rgb(255 255 245 / 50%);
@@ -194,6 +280,8 @@
   --hero-stage-edge: rgb(50 103 72 / 16%);
   --hero-stage-ribbon:
     transparent 91%, var(--hero-stage-mist) 97%, var(--hero-stage-edge) 99%, transparent 101%;
+  width: 100%;
+  height: clamp(265px, 46.5vw, 510px);
 }
 
 .dark .home-hero-stage {
@@ -205,8 +293,9 @@
 .home-hero-stage::after {
   content: "";
   position: absolute;
-  inset-block: 0;
-  width: 56%;
+  z-index: 0;
+  inset-block: 2% 1%;
+  width: 57%;
   pointer-events: none;
   mask-image:
     linear-gradient(to var(--hero-stage-fade), #000 30%, transparent 80%),
@@ -215,7 +304,7 @@
 }
 
 .home-hero-stage::before {
-  left: -4%;
+  left: -5%;
   --hero-stage-fade: right;
   background:
     radial-gradient(ellipse 105% 56% at 88% -13%, var(--hero-stage-ribbon)),
@@ -224,7 +313,7 @@
 }
 
 .home-hero-stage::after {
-  right: -4%;
+  right: -5%;
   --hero-stage-fade: left;
   background:
     radial-gradient(ellipse 117% 56% at 12% -26%, var(--hero-stage-ribbon)),
@@ -238,9 +327,79 @@
   }
 }
 
+@keyframes hero-ring-reveal {
+  from {
+    transform: translate(-53%, -46%) rotate(6deg) scale(0.93);
+    opacity: 0.45;
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-name-reveal {
+  0% {
+    background-position: 170% 0;
+    opacity: 0;
+  }
+  15%,
+  82% {
+    opacity: 1;
+  }
+  100% {
+    background-position: -100% 0;
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .home-hero-stage::before,
   .home-hero-stage::after {
     animation: hero-stage-drift 18s ease-in-out infinite;
+  }
+
+  .home-hero.is-revealing .home-hero-ring-position {
+    animation: hero-ring-reveal 1800ms cubic-bezier(0.2, 0.6, 0.2, 1) both;
+  }
+
+  .home-hero.is-revealing .home-hero-name::after {
+    animation: hero-name-reveal 1800ms ease-in-out both;
+  }
+}
+
+@media (max-width: 639px) {
+  .home-hero-stage {
+    height: clamp(250px, 65vw, 360px);
+  }
+
+  .home-hero-heading {
+    padding-top: 0;
+  }
+
+  .home-hero-greeting {
+    font-size: 14px;
+  }
+
+  .home-hero-title {
+    padding-top: 11px;
+    font-size: clamp(58px, 15.5vw, 94px);
+  }
+
+  .home-hero-ring-position {
+    /* Keep the enlarged ring's lower edge inside the stage on narrow tablets. */
+    top: min(60%, calc(100% - 28vw));
+    width: 126%;
+  }
+
+  .home-hero-stage::before,
+  .home-hero-stage::after {
+    inset-block: 18% -2%;
+    width: 60%;
+  }
+
+  .home-hero-tagline {
+    font-size: 18px;
+    letter-spacing: 0;
   }
 }
