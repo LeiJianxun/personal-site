@@ -24,6 +24,11 @@ public class ProjectController {
         return projects.findAll();
     }
 
+    @GetMapping("/star")
+    public List<ProjectRepository.Summary> listStarProjects() {
+        return projects.findStarProjects();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProjectRepository.Detail> detail(@PathVariable("id") long id) {
         return ResponseEntity.of(projects.findById(id));

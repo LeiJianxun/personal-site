@@ -24,7 +24,28 @@ public class ProjectRepository {
         return jdbc.sql("""
             SELECT id, slug, title, summary, stack
             FROM projects
-            ORDER BY id DESC
+            ORDER BY id ASC
+            """)
+                .query((rs, rowNum) -> {
+                    JsonNode stack = parseJson(rs.getString("stack"));
+                    return new Summary(
+                            rs.getLong("id"),
+                            rs.getString("slug"),
+                            rs.getString("title"),
+                            rs.getString("summary"),
+                            stack == null || stack.isNull() ? json.createArrayNode() : stack
+                    );
+                })
+                .list();
+    }
+
+    // 查询精选作品列表
+    public List<Summary> findStarProjects() {
+        return jdbc.sql("""
+            SELECT id, slug, title, summary, stack
+            FROM projects
+            WHERE star_project = true
+            ORDER BY id ASC
             """)
                 .query((rs, rowNum) -> {
                     JsonNode stack = parseJson(rs.getString("stack"));
