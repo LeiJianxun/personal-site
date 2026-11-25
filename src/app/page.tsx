@@ -3,7 +3,7 @@ import { HomeHeader } from "@/components/indexCom/home-header";
 import { HomeHero } from "@/components/indexCom/home-hero";
 import { HomeResources } from "@/components/indexCom/home-resources";
 import { HomeNotes } from "@/components/indexCom/home-notes";
-import { getProjects } from "@/lib/projects-api";
+import { getProjects, getStarProjects } from "@/lib/projects-api";
 import { ArrowUpRight, FolderCode } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +23,7 @@ const projectCovers: Record<string, { light: string; dark: string }> = {
 };
 
 async function ProjectList() {
-  const projects = await getProjects();
+  const projects = await getStarProjects();
 
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,20rem),1fr))] gap-6">

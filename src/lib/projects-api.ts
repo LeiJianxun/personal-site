@@ -32,6 +32,16 @@ export async function getProjects(): Promise<ProjectSummary[]> {
   return response.json();
 }
 
+export async function getStarProjects(): Promise<ProjectSummary[]> {
+  const response = await requestProjects("/star");
+
+  if (!response.ok) {
+    throw new Error(`作品列表请求失败（${response.status}）`);
+  }
+
+  return response.json();
+}
+
 export async function getProject(id: number): Promise<ProjectDetail | null> {
   const response = await requestProjects(`/${id}`);
 
